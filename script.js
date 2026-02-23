@@ -103,3 +103,22 @@ cancelBtn.addEventListener('click', () => {
     formContainer.style.display = 'none';
 });
 
+// Get Form 
+const bookForm = document.getElementById('book-form');
+
+// Form Submission
+bookForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read = document.getElementById('read').checked;
+
+    addBookToLibrary(title, author, pages, read);
+
+    bookForm.reset();
+
+    formContainer.style.display = 'none';
+});
+
