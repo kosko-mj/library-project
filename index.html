@@ -11,10 +11,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>My Library</h1>
-
-    <!-- Add Button -->
-    <button id="new-book-btn">New Book +</button>
+    <header class="library-header">
+        <div class="header-top">
+            <div class="logo-area">
+                <i class="ri-book-2-line logo-icon"></i>  <!-- Remix book icon -->
+                <h1>My Library</h1>
+            </div>
+            <div class="search-container">
+                <i class="ri-search-line search-icon" id="search-icon"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Search books...">
+            </div>
+        </div>
+        <div class="header-bottom">    
+            <button id="new-book-btn" class="add-book-btn">+ Add Book</button>
+        </div>
+    </header>
     
     <!-- Mew Book Form -->
     <div id="book-form-container" style="display: none;">
@@ -44,10 +55,15 @@
             <button type="submit">Add Book</button>
             <button type="button" id="cancel-form">Cancel</button>
         </form>
+    </div>
+    
+    <!-- Catalog Container -->
+    <div class="catalog-container">
+        <div id="drawer-container" class="drawer-grid"></div>
     </div> 
 
     <!-- Book Container -->
-     <div id="library-container" class="book-grid"></div>
+     <div id="library-container" class="book-grid" style="display: none;"></div>
 
     <script src="script.js"></script>    
 </body>

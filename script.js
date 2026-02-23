@@ -122,3 +122,55 @@ bookForm.addEventListener('submit', (event) => {
     formContainer.style.display = 'none';
 });
 
+// Drawer categories
+const drawers = [
+    { name: "FICTION", count: 0 },
+    { name: "NON-FICTION", count: 0 },
+    { name: "SCI-FI", count: 0 },
+    { name: "BIOGRAPHY", count: 0 },
+    { name: "MYSTERY", count: 0 },
+    { name: "HISTORY", count: 0}
+];
+
+// Function to display drawers
+function displayDrawers() {
+    const drawerContainer = document.getElementById('drawer-container');
+    drawerContainer.innerHTML = '';
+    
+    drawers.forEach(drawer => {
+        const drawerElement = document.createElement('div');
+        drawerElement.classList.add('drawer');
+        
+        drawerElement.innerHTML = `
+            <div class="drawer-front">
+                <div class="drawer-name-plate">
+                    <span class="drawer-name">${drawer.name}</span>
+                </div>
+                <span class="drawer-count">${drawer.count}</span>
+            </div>
+        `;
+        
+        drawerContainer.appendChild(drawerElement);
+    });
+}
+
+// Call it to show drawers
+displayDrawers();
+
+// Search functionality
+const searchIcon = document.getElementById('search-icon');
+const searchInput = document.getElementById('search-input');
+
+searchIcon.addEventListener('click', () => {
+    searchInput.classList.toggle('expanded');
+    if (searchInput.classList.contains('expanded')) {
+        searchInput.focus();
+    }
+});
+
+// Optional: Search as you type (we'll implement filtering later)
+searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    console.log('Searching for:', searchTerm);
+    // We'll add actual search/filter logic later
+});

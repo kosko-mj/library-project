@@ -1,3 +1,211 @@
+.library-header {
+    background: #ffffff;
+    border-bottom: 2px solid #eaeaea;
+    padding: 20px 0 15px 0;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.header-top {
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;  /* Prevents logo from shrinking */
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: #c44536;
+    font-weight: 600;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.library-header h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #c44536;
+    margin: 0;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;  /* Keeps "MY LIBRARY" on one line */
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    flex-shrink: 0;  /* Prevents search from shrinking */
+}
+
+.search-icon {
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.search-icon:hover {
+    color: #666;
+}
+
+.search-input {
+    width: 0;
+    padding: 0;
+    border: none;
+    border-bottom: 2px solid #c44536;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    transition: width 0.3s ease, padding 0.3s ease;
+    opacity: 0;
+}
+
+.search-input.expanded {
+    width: 200px;
+    padding: 5px 0;
+    opacity: 1;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+.header-bottom {
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.add-book-btn {
+    background: #4f7c9c;  /* Slate blue */
+    color: white;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 40px;
+    line-height: 1;
+}
+
+.add-book-btn:hover {
+    background: #3f6380;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.add-book-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .library-header h1 {
+        font-size: 1.4rem;  /* Smaller on mobile */
+    }
+    
+    .search-input.expanded {
+        width: 140px;  /* Smaller search on mobile */
+    }
+}   
+
+.drawer {
+    background: #5a4a38;  /* Light wood drawer color */
+    border: 1px solid #3a2f22;
+    border-radius: 8px 8px 4px 4px;
+    padding: 25px 15px 12px 15px;
+    box-shadow: 
+        0 4px 0 #3a2f22,
+        0 6px 8px rgba(0,0,0,0.2);
+    min-height: 120px;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    transition: all 0.1s ease;
+    cursor: pointer;
+}
+
+.drawer:active {
+    transform: translateY(4px);
+    box-shadow: 
+        0 0 0 #3a2f22,
+        0 6px 8px rgba(0,0,0,0.2);
+}
+
+.drawer-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 100%;
+    gap: 10px;
+}
+
+.drawer-name-plate {
+    border: 2px solid #7b6348;
+    border-radius: 4px;
+    padding: 8px 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: #2a1f12;
+    text-transform: uppercase;
+    width: 160px;
+    text-align: center;
+    background: linear-gradient(145deg, #c4a582, #9b7e5c);
+}
+
+.drawer-name {
+    display: block;
+    background: #fff9e6;  /* Off-white card */
+    padding: 6px 0;
+    border-radius: 2px;
+    color: #3a2c1b;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #7d6348;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.drawer-count {
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+    color: #e8dcc0;
+    background: #3a2f22;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #7d6348;
+    min-width: 40px;
+    text-align: center;
+}
+
 .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -18,7 +226,7 @@
     color: #333;
 }
 
-read-status {
+.read-status {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -41,4 +249,27 @@ read-status {
 .toggle-read {
     background: #4CAF50;
     color: white;
+}
+
+/* Missing catalog container styles - ADD THIS */
+.catalog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.drawer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px;
+    background: #5a4a38;
+    border-radius: 12px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+}
+
+@media (min-width: 1000px) {
+    .drawer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
