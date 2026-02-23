@@ -88,3 +88,18 @@ addBookToLibrary("Dune", "Frank Herbert", 412, true);
 
 console.log(myLibrary);
 
+// Get Button/Form Container
+const newBookBtn = document.getElementById('new-book-btn');
+const formContainer = document.getElementById('book-form-container');
+const cancelBtn = document.getElementById('cancel-form');
+
+// Show form on NEW Book click
+newBookBtn.addEventListener('click', () => {
+    formContainer.style.display = 'block';
+});
+
+// Hide form on Cancel click
+cancelBtn.addEventListener('click', () => {
+    formContainer.style.display = 'none';
+});
+
