@@ -4,6 +4,7 @@
     padding: 20px 0 15px 0;
     margin-bottom: 40px;
     width: 100%;
+    margin-top: 0;
 }
 
 .header-top {
@@ -134,7 +135,10 @@
 }   
 
 .drawer {
-    background: #5a4a38;  /* Light wood drawer color */
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    background: #ae6327;
     border: 1px solid #3a2f22;
     border-radius: 8px 8px 4px 4px;
     padding: 25px 15px 12px 15px;
@@ -144,9 +148,24 @@
     min-height: 120px;
     display: flex;
     align-items: flex-end;
-    position: relative;
     transition: all 0.1s ease;
     cursor: pointer;
+}
+
+.drawer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('assets/woodgrain.png');
+    background-size: cover;
+    opacity: 0.3;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 1;
+    border-radius: inherit;
 }
 
 .drawer:active {
@@ -206,6 +225,11 @@
     text-align: center;
 }
 
+.drawer-name-plate, .drawer-count {
+    position: relative;
+    z-index: 3;
+}
+
 .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -263,9 +287,45 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
     padding: 30px;
-    background: #5a4a38;
+    background: #ae6327;
     border-radius: 12px;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+    isolation: isolate;
+}
+
+/* Wood grain overlay */
+.drawer-grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('assets/woodgrain.png');
+    background-size: 100% 100%;
+    transform: scaleX(-1);
+    opacity: 0.3;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    z-index: 0;
+    border-radius: 12px;
+}
+
+.drawer-grid > * {
+    position: relative;
+    z-index: 1;
+}
+
+body {
+    background-color: #b7a48b;
+    background-image: 
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 8px),
+        repeating-linear-gradient(135deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 8px);
+    background-size: 20px 20px;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 @media (min-width: 1000px) {
