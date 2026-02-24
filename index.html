@@ -33,6 +33,19 @@
             <h3>Add New Book</h3>
 
             <div>
+                <label for="genre">Genre:</label>
+                <select id="genre" name="genre" required>
+                    <option value="">Select a genre</option>
+                    <option value="FICTION">Fiction</option>
+                    <option value="NON-FICTION">Non-Fiction</option>
+                    <option value="SCI-FI">Sci-Fi</option>
+                    <option value="BIOGRAPHY">Biography</option>
+                    <option value="MYSTERY">Mystery</option>
+                    <option value="HISTORY">History</option>
+                </select>
+            </div>
+
+            <div>
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" required>
             </div>
@@ -61,6 +74,11 @@
     <div class="catalog-container">
         <div id="drawer-container" class="drawer-grid"></div>
     </div> 
+
+    <!-- ADD THE CLOSE ICON HERE -->
+    <div class="close-view" id="close-view" style="display: none;">
+        <i class="ri-close-line close-icon"></i>
+    </div>
 
     <!-- Book Container -->
      <div id="library-container" class="book-grid" style="display: none;"></div>
