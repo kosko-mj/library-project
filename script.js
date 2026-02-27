@@ -1,39 +1,117 @@
-// Book Constructor
-function Book(title, author, pages, genre, read) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.genre = genre;
-    this.read = read;
+// ====================================
+// BOOK CLASS
+// ====================================
+class Book {
+    constructor(title, author, pages, genre, read) {
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.genre = genre;
+        this.read = read;
+    }
+
+    // Getter - formats the title when accessed
+    get title() {
+        return this._title.toUpperCase();
+    }
+
+    // Setter - prevents empty titles
+    set title(newTitle) {
+        if (newTitle.trim() === '') {
+            console.log('Title cannot be empty!');
+            return;
+        }
+        this._title = newTitle;
+    }
+
+    // Instance method - belongs to each book
+    info() {
+        let readIcon = this.read ? '<i class="ri-checkbox-circle-line"></i>' : '<i class="ri-book-open-line"></i>';
+        let readText = this.read ? 'read' : 'not read yet';
+
+        return `${this.title} by ${this.author} - ${this.pages} pages - ${readIcon} ${readText}`;
+    }
+
+    // Another instance method
+    toggleRead() {
+        this.read = !this.read;
+    }
 }
 
-// Info Method
-Book.prototype.info = function() {
-    let readIcon = this.read ? '<i class="ri-checkbox-circle-line"></i>' : '<i class="ri-book-open-line"></i>';
-    let readText = this.read ? 'read' : 'not read yet';
+// ====================================
+// LIBRARY CLASS
+// ====================================
+class Library {
+    constructor() {
+        this.books = [];
+    }
+
+    addBook(book) {
+        this.books.push(book);
+    }
+
+    removeBook(bookId) {
+        this.books = this.books.filter(book => book.id !== bookId);
+    }
+
+    getBooksByGenre(genre) {
+        return this.books.filter(book => book.genre === genre);
+    }
+
+    getGenreCount(genre) {
+        return this.books.filter(book => book.genre === genre).length;
+    }
+}
+
+// ====================================
+// DRAWER CLASS
+// ====================================
+class Drawer {
+    constructor(genre, count) {
+        this.genre = genre;
+        this.count = count;
+    }
+
+    createElement() {
+        const drawer = document.createElement('div');
+        drawer.classList.add('drawer');
+        drawer.setAttribute('data-genre', this.genre);
+
+        drawer.innerHTML = `
+            <div class="drawer-front">
+                <div class="drawer-name-plate">
+                    <span class="drawer-name">${this.genre}</span>
+                </div>
+                <span class="drawer-count">${this.count}</span>
+            </div>
+        `;   
         
-    return `${this.title} by ${this.author} - ${this.pages} pages - ${readIcon} ${readText}`;
-};
+        return drawer;
+    }
+}
 
-// Array to Store Books
-const myLibrary = [];
-
-// Add Book Function
+// ====================================
+// ADD BOOK FUNCTION
+// ====================================
 function addBookToLibrary(title, author, pages, genre, read) {
     const newBook = new Book(title, author, pages, genre, read);
-    myLibrary.push(newBook);
-    updateDrawerCounts();
+    myLibrary.addBook(newBook);
+    displayDrawers();
     displayBooks();
 }
 
-// Display Books Function
+// ====================================
+// DISPLAY BOOKS FUNCTION
+// ====================================
 function displayBooks() {
     const container = document.getElementById('library-container');
     container.innerHTML = '';
 
-    for (let i = 0; i < myLibrary.length; i++) {
-        const book = myLibrary[i];
+    const books = myLibrary.books;
+
+    for (let i = 0; i < books.length; i++) {
+        const book = books[i];
 
         const bookCard = document.createElement('div');
         bookCard.classList.add('book-card');
@@ -53,26 +131,31 @@ function displayBooks() {
 
         container.appendChild(bookCard);
 
+        // Remove button
         const removeBtn = bookCard.querySelector('.remove-btn');
         removeBtn.addEventListener('click', function() {
             const bookId = this.dataset.id;
-            const bookIndex = myLibrary.findIndex(book => book.id === bookId);
-            myLibrary.splice(bookIndex, 1);
-            updateDrawerCounts();
+            myLibrary.removeBook(bookId);
+            displayDrawers();
             displayBooks();
         });
 
+        // Toggle read button
         const toggleBtn = bookCard.querySelector('.toggle-read');
         toggleBtn.addEventListener('click', function() {
             const bookId = this.dataset.id;
-            const book = myLibrary.find(book => book.id === bookId);
-            book.read = !book.read;
-            displayBooks();
+            const book = myLibrary.books.find(b => b.id === bookId);  // Find in books array
+            if (book) {
+                book.toggleRead();
+                displayBooks();
+            }
         });
     }
 }
 
-// Display filtered books (for when a drawer is opened)
+// ====================================
+// DISPLAY FILTERED BOOKS
+// ====================================
 function displayFilteredBooks(books) {
     const container = document.getElementById('library-container');
     container.innerHTML = '';
@@ -103,67 +186,56 @@ function displayFilteredBooks(books) {
 
         container.appendChild(bookCard);
 
+        // Remove button
         const removeBtn = bookCard.querySelector('.remove-btn');
         removeBtn.addEventListener('click', function() {
             const bookId = this.dataset.id;
-            const bookIndex = myLibrary.findIndex(book => book.id === bookId);
-            myLibrary.splice(bookIndex, 1);
-            updateDrawerCounts();
+            myLibrary.removeBook(bookId);
+            displayDrawers();
             
+            // Get updated filtered books
             const currentGenre = books[0]?.genre;
-            const updatedFiltered = myLibrary.filter(book => book.genre === currentGenre);
+            const updatedFiltered = myLibrary.getBooksByGenre(currentGenre);
             displayFilteredBooks(updatedFiltered);
         });
 
-        // ✅ FIXED: Added toggle button handler
+        // Toggle read button
         const toggleBtn = bookCard.querySelector('.toggle-read');
         toggleBtn.addEventListener('click', function() {
             const bookId = this.dataset.id;
-            const book = myLibrary.find(book => book.id === bookId);
-            book.read = !book.read;
-            
-            const currentGenre = books[0]?.genre;
-            const updatedFiltered = myLibrary.filter(book => book.genre === currentGenre);
-            displayFilteredBooks(updatedFiltered);
+            const book = myLibrary.books.find(b => b.id === bookId);
+            if (book) {
+                book.toggleRead();
+                
+                // Refresh the current filtered view
+                const currentGenre = books[0]?.genre;
+                const updatedFiltered = myLibrary.getBooksByGenre(currentGenre);
+                displayFilteredBooks(updatedFiltered);
+            }
         });
     }
 }
 
-// Drawer categories
-const drawers = [
-    { name: "FICTION", count: 0 },
-    { name: "NON-FICTION", count: 0 },
-    { name: "SCI-FI", count: 0 },
-    { name: "BIOGRAPHY", count: 0 },
-    { name: "MYSTERY", count: 0 },
-    { name: "HISTORY", count: 0 }
-];
-
-// Function to display drawers
+// ====================================
+// DISPLAY DRAWERS
+// ====================================
 function displayDrawers() {
     const drawerContainer = document.getElementById('drawer-container');
     drawerContainer.innerHTML = '';
     
-    drawers.forEach(drawer => {
-        const drawerElement = document.createElement('div');
-        drawerElement.classList.add('drawer');
-        drawerElement.setAttribute('data-genre', drawer.name);
-        
-        drawerElement.innerHTML = `
-            <div class="drawer-front">
-                <div class="drawer-name-plate">
-                    <span class="drawer-name">${drawer.name}</span>
-                </div>
-                <span class="drawer-count">${drawer.count}</span>
-            </div>
-        `;
+    const genres = ['FICTION', 'NON-FICTION', 'SCI-FI', 'BIOGRAPHY', 'MYSTERY', 'HISTORY'];
+    
+    genres.forEach(genre => {
+        const count = myLibrary.getGenreCount(genre);  // Note: you have a typo here!
+        const drawer = new Drawer(genre, count);
+        const drawerElement = drawer.createElement();
         
         drawerElement.addEventListener('click', () => {
             document.getElementById('drawer-container').style.display = 'none';
             document.getElementById('library-container').style.display = 'grid';
             document.getElementById('close-view').style.display = 'flex';
             
-            const filteredBooks = myLibrary.filter(book => book.genre === drawer.name);
+            const filteredBooks = myLibrary.getBooksByGenre(genre);
             displayFilteredBooks(filteredBooks);
         });
         
@@ -179,18 +251,6 @@ if (closeView) {
         document.getElementById('library-container').style.display = 'none';
         closeView.style.display = 'none';
     });
-}
-
-// Function to update drawer counts
-function updateDrawerCounts() {
-    drawers.forEach(drawer => drawer.count = 0);
-    
-    myLibrary.forEach(book => {
-        const drawer = drawers.find(d => d.name === book.genre);
-        if (drawer) drawer.count++;
-    });
-    
-    displayDrawers();
 }
 
 // Get Button/Form Container
