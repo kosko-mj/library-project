@@ -423,3 +423,22 @@ body {
     transform: scale(1.1);
     color: #a3362a;
 }
+
+/* Form Validation Styles */
+.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    min-height: 1.25rem;
+}
+
+#book-form input.invalid,
+#book-form select.invalid {
+    border-color: #dc3545 !important;
+    outline-color: #dc3545;
+}
+
+#book-form input.valid, 
+#book-form select.valid {
+    border-color: #28a745 !important;
+}
