@@ -1,7 +1,7 @@
 // ====================================
 // UI CONTROLLER CLASS
 // ====================================
-import Drawer from "./Drawer";
+import Drawer from "./Drawer.js";
 
 export default class UIController {
     constructor(library) {

@@ -4,7 +4,7 @@
 import Book from './components/Book.js';
 import Library from './components/Library.js';
 import UIController from './components/UIController.js';
-
+import '../css/style.css';
 
 
 
